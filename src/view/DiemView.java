@@ -1,7 +1,6 @@
 package view;
 
 import java.util.Scanner;
-
 import model.Diem;
 import service.DiemService;
 import util.Validation;
@@ -18,7 +17,7 @@ public class DiemView {
 
     public void menuDiem() {
 
-        int luaChon;
+        int luaChon = -1;
 
         do {
 

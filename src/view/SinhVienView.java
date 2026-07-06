@@ -17,7 +17,7 @@ public class SinhVienView {
 
     public void menuSinhVien() {
 
-        int luaChon;
+        int luaChon = -1;
 
         do {
 
@@ -30,7 +30,12 @@ public class SinhVienView {
             System.out.println("0. Quay lai");
             System.out.print("Nhap lua chon: ");
 
-            luaChon = Integer.parseInt(scanner.nextLine());
+            try {
+                luaChon = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Vui long nhap so!");
+                continue;
+            }
 
             switch (luaChon) {
 
@@ -67,44 +72,70 @@ public class SinhVienView {
 
     private void themSinhVien() {
 
-        System.out.print("Ma sinh vien: ");
-        String ma = scanner.nextLine();
+        String ma;
+        do {
+            System.out.print("Ma sinh vien: ");
+            ma = scanner.nextLine();
 
-        if (!Validation.kiemTraMaSV(ma)) {
-            System.out.println("Ma sinh vien khong hop le.");
-            return;
-        }
+            if (!Validation.kiemTraMaSV(ma)) {
+                System.out.println("Ma sinh vien khong hop le. Vui long nhap lai.");
+            }
 
-        System.out.print("Ho ten: ");
-        String ten = scanner.nextLine();
+        } while (!Validation.kiemTraMaSV(ma));
 
-        if (!Validation.kiemTraHoTen(ten)) {
-            System.out.println("Ho ten khong hop le.");
-            return;
-        }
+        String ten;
+        do {
+            System.out.print("Ho ten: ");
+            ten = scanner.nextLine();
 
-        System.out.print("Lop: ");
-        String lop = scanner.nextLine();
+            if (!Validation.kiemTraHoTen(ten)) {
+                System.out.println("Ho ten khong hop le. Vui long nhap lai.");
+            }
 
-        if (!Validation.kiemTraLop(lop)) {
-            System.out.println("Lop khong hop le.");
-            return;
-        }
+        } while (!Validation.kiemTraHoTen(ten));
 
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
+        String lop;
+        do {
+            System.out.print("Lop: ");
+            lop = scanner.nextLine();
 
-        if (!Validation.kiemTraEmail(email)) {
-            System.out.println("Email khong hop le.");
-            return;
-        }
+            if (!Validation.kiemTraLop(lop)) {
+                System.out.println("Lop khong hop le. Vui long nhap lai.");
+            }
 
-        System.out.print("Diem: ");
-        double diem = Double.parseDouble(scanner.nextLine());
+        } while (!Validation.kiemTraLop(lop));
 
-        if (!Validation.kiemTraDiem(diem)) {
-            System.out.println("Diem phai tu 0 den 10.");
-            return;
+        String email;
+        do {
+            System.out.print("Email: ");
+            email = scanner.nextLine();
+
+            if (!Validation.kiemTraEmail(email)) {
+                System.out.println("Email khong hop le. Vui long nhap lai.");
+            }
+
+        } while (!Validation.kiemTraEmail(email));
+
+        double diem;
+        while (true) {
+
+            try {
+
+                System.out.print("Diem: ");
+                diem = Double.parseDouble(scanner.nextLine());
+
+                if (Validation.kiemTraDiem(diem)) {
+                    break;
+                }
+
+                System.out.println("Diem phai tu 0 den 10.");
+
+            } catch (NumberFormatException e) {
+
+                System.out.println("Vui long nhap so.");
+
+            }
+
         }
 
         SinhVien sv = new SinhVien(ma, ten, lop, email, diem);
@@ -122,6 +153,7 @@ public class SinhVienView {
             System.out.println("Danh sach sinh vien trong.");
 
             return;
+
         }
 
         for (SinhVien sv : service.layDanhSachSinhVien()) {

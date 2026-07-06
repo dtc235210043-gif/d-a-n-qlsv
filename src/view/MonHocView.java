@@ -1,6 +1,5 @@
-// removed package declaration to match project source layout
-
 package view;
+
 import java.util.Scanner;
 
 import model.MonHoc;
@@ -18,7 +17,7 @@ public class MonHocView {
 
     public void menuMonHoc() {
 
-        int luaChon;
+        int luaChon = -1;
 
         do {
 
@@ -31,7 +30,12 @@ public class MonHocView {
             System.out.println("0. Quay lai");
             System.out.print("Nhap lua chon: ");
 
-            luaChon = Integer.parseInt(scanner.nextLine());
+            try {
+                luaChon = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Vui long nhap so!");
+                continue;
+            }
 
             switch (luaChon) {
 
@@ -56,31 +60,58 @@ public class MonHocView {
                     break;
 
                 case 0:
+                    System.out.println("Quay lai menu chinh.");
                     break;
 
                 default:
                     System.out.println("Lua chon khong hop le.");
-
             }
 
         } while (luaChon != 0);
-
     }
 
     private void themMonHoc() {
 
-        System.out.print("Nhap ma mon: ");
-        String maMon = scanner.nextLine();
+        String maMon;
 
-        System.out.print("Nhap ten mon: ");
-        String tenMon = scanner.nextLine();
+        while (true) {
+
+            System.out.print("Nhap ma mon: ");
+            maMon = scanner.nextLine().trim();
+
+            if (maMon.isEmpty()) {
+                System.out.println("Ma mon khong duoc de trong.");
+                continue;
+            }
+
+            if (service.timTheoMa(maMon) != null) {
+                System.out.println("Ma mon da ton tai.");
+                continue;
+            }
+
+            break;
+        }
+
+        String tenMon;
+
+        while (true) {
+
+            System.out.print("Nhap ten mon: ");
+            tenMon = scanner.nextLine().trim();
+
+            if (tenMon.isEmpty()) {
+                System.out.println("Ten mon khong duoc de trong.");
+                continue;
+            }
+
+            break;
+        }
 
         MonHoc monHoc = new MonHoc(maMon, tenMon);
 
         service.themMonHoc(monHoc);
 
         System.out.println("Them mon hoc thanh cong.");
-
     }
 
     private void hienThiDanhSach() {
@@ -88,9 +119,7 @@ public class MonHocView {
         if (service.layDanhSachMonHoc().isEmpty()) {
 
             System.out.println("Danh sach mon hoc trong.");
-
             return;
-
         }
 
         for (MonHoc mh : service.layDanhSachMonHoc()) {
@@ -98,13 +127,11 @@ public class MonHocView {
             System.out.println(mh);
 
         }
-
     }
 
     private void timMonHoc() {
 
         System.out.print("Nhap ma mon: ");
-
         String maMon = scanner.nextLine();
 
         MonHoc mh = service.timTheoMa(maMon);
@@ -118,13 +145,11 @@ public class MonHocView {
             System.out.println(mh);
 
         }
-
     }
 
     private void suaMonHoc() {
 
         System.out.print("Nhap ma mon can sua: ");
-
         String maMon = scanner.nextLine();
 
         MonHoc mh = service.timTheoMa(maMon);
@@ -132,14 +157,24 @@ public class MonHocView {
         if (mh == null) {
 
             System.out.println("Khong tim thay mon hoc.");
-
             return;
 
         }
 
-        System.out.print("Nhap ten mon moi: ");
+        String tenMon;
 
-        String tenMon = scanner.nextLine();
+        while (true) {
+
+            System.out.print("Nhap ten mon moi: ");
+            tenMon = scanner.nextLine().trim();
+
+            if (tenMon.isEmpty()) {
+                System.out.println("Ten mon khong duoc de trong.");
+                continue;
+            }
+
+            break;
+        }
 
         MonHoc monHoc = new MonHoc(maMon, tenMon);
 
@@ -152,13 +187,11 @@ public class MonHocView {
             System.out.println("Sua that bai.");
 
         }
-
     }
 
     private void xoaMonHoc() {
 
         System.out.print("Nhap ma mon can xoa: ");
-
         String maMon = scanner.nextLine();
 
         if (service.xoaMonHoc(maMon)) {
@@ -170,7 +203,5 @@ public class MonHocView {
             System.out.println("Khong tim thay mon hoc.");
 
         }
-
     }
-
 }

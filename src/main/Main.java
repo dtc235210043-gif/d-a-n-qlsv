@@ -7,18 +7,22 @@ public class Main {
 
     public static void main(String[] args) {
 
-        DangNhapView dangNhapView = new DangNhapView();
+        while (true) {
 
-        if (dangNhapView.hienThiDangNhap()) {
+            DangNhapView dangNhapView = new DangNhapView();
 
-            Menu menu = new Menu();
-            menu.hienThiMenu();
+            if (dangNhapView.hienThiDangNhap()) {
 
-        } else {
+                Menu menu = new Menu();
+                menu.hienThiMenu();
 
-            System.out.println("Chuong trinh ket thuc.");
+            } else {
+
+                System.out.println("Dang nhap that bai.");
+            }
 
         }
 
     }
+
 }

@@ -20,7 +20,7 @@ public class Menu {
 
     public void hienThiMenu() {
 
-        int luaChon=-1;
+        int luaChon = -1;
 
         do {
 
@@ -55,7 +55,17 @@ public class Menu {
                     break;
 
                 case 0:
-                    System.out.println("Cam on ban đa su dung chuong trinh!");
+
+                    if (xacNhanThoat()) {
+
+                        System.out.println("Cam on ban da su dung chuong trinh!");
+
+                    } else {
+
+                        luaChon = -1;
+
+                    }
+
                     break;
 
                 default:
@@ -63,6 +73,28 @@ public class Menu {
             }
 
         } while (luaChon != 0);
+    }
+
+    private boolean xacNhanThoat() {
+
+        while (true) {
+
+            System.out.print("Ban co muon thoat chuong trinh? (YES/NO): ");
+
+            String chon = scanner.nextLine().trim().toUpperCase();
+
+            if (chon.equals("YES")) {
+                return true;
+            }
+
+            if (chon.equals("NO")) {
+                return false;
+            }
+
+            System.out.println("Chi duoc nhap YES  hoac NO.");
+
+        }
+
     }
 
 }
